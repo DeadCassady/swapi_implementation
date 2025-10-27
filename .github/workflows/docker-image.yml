@@ -35,7 +35,7 @@ jobs:
             # Creating .env files on the server
             echo "${{secrets.ENV_FILES}}" >> .env
             echo "${{secrets.DB_ENV_FILES}}" >> .db.env
-            
+
             docker compose build
             docker compose up -d
             
