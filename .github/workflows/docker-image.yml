@@ -33,8 +33,13 @@ jobs:
             git pull origin master
             
             # Creating .env files on the server
-            echo "${{secrets.ENV_FILES}}" >> .env
-            echo "${{secrets.DB_ENV_FILES}}" >> .db.env
+            cat > ".env" << EOF
+            ${{ secrets.ENV_FILES }}
+            EOF
+
+            cat > ".db.env" << EOF
+            ${{ secrets.DB_ENV_FILES }}
+            EOF
 
             docker compose build
             docker compose up -d
