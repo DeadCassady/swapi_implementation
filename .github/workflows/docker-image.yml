@@ -30,7 +30,7 @@ jobs:
           script: |
             cd ~/app
 
-            git pull origin main
+            git pull origin master
             
             # Creating .env files on the server
             echo "${{secrets.ENV_FILES}}" >> .env
