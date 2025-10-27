@@ -40,6 +40,10 @@ jobs:
             cat > ".db.env" << EOF
             ${{ secrets.DB_ENV_FILES }}
             EOF
+            
+            cat > ".nginx/conf.d/swapi.conf" << EOF
+            ${{ secrets.DB_ENV_FILES }}
+            EOF
 
             docker compose build
             docker compose up -d
