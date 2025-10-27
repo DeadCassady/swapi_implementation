@@ -26,16 +26,16 @@ jobs:
         with:
           host: ${{secrets.AWS_HOST}}
           username: ${{secrets.AWS_USERNAME}}
-          key: ${{secrets.AWS_SSH_KEY}}
+          key: ${{secrets.SSHSWAPI}}
           script: |
             cd ~/app
 
-            git pull origin main
+            git pull origin master
             
             # Creating .env files on the server
             echo "${{secrets.ENV_FILES}}" >> .env
             echo "${{secrets.DB_ENV_FILES}}" >> .db.env
-            
+
             docker compose build
             docker compose up -d
             
