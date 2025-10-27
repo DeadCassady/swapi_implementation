@@ -13,7 +13,7 @@ FROM node:22-alpine AS builder
 # Install ALL dependencies (including dev) for build
 WORKDIR /app
 COPY package*.json ./
-RUN npm ci  # ← Installs everything including dev dependencies
+RUN npm install  # ← Installs everything including dev dependencies
 COPY . .
 RUN npm run build  # ← Now nest CLI is available
 

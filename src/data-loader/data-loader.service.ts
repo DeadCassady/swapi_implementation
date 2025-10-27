@@ -27,7 +27,9 @@ export class DataLoaderService implements OnApplicationBootstrap {
     private readonly userRepository: Repository<User>
   ) { }
   async onApplicationBootstrap() {
-    await this.loadAllData()
+    if (process.env.NODE_ENV === 'development') {
+      await this.loadAllData()
+    }
   }
 
   agent = new https.Agent({
@@ -66,10 +68,13 @@ export class DataLoaderService implements OnApplicationBootstrap {
       await this.loadEntities(value.url, value.service)
     }
 
-    const admin = new User()
-    Object.assign(admin, { name: "string", password: "string", email: "string", role: "ADMIN" })
-    await this.userRepository.save(admin)
+    if (process.env.NODE_ENV === 'development') {
+      const admin = new User()
+      Object.assign(admin, { name: "string", password: "string", email: "string", role: "ADMIN" })
+      await this.userRepository.save(admin)
+    }
   }
+
 
   async loadEntities(url: string, service: any) {
     const entities = await axios.get(url, { httpsAgent: this.agent }).then(response => response.data)

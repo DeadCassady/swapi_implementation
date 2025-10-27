@@ -1,0 +1,41 @@
+name: Docker Image CI
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v4
+    - name: Build the Docker image
+      run: docker build . --file Dockerfile --tag my-image-name:$(date +%s)
+
+  deploy:
+      runs-on: ubuntu-latest
+
+      steps:
+      - name: Copy files to EC2 and deploy
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: ${{secrets.AWS_HOST}}
+          username: ${{secrets.AWS_USERNAME}}
+          key: ${{secrets.AWS_SSH_KEY}}
+          cript: |
+            cd ~/app
+
+            git pull origin main
+            
+            # Creating .env files on the server
+            echo "${{secrets.ENV_FILES}}" >> .env
+            echo "${{secrets.DB_ENV_FILES}}" >> .db.env
+            
+            docker compose build
+            docker compose up -d
+            
