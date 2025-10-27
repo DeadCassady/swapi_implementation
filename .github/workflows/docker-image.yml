@@ -27,7 +27,7 @@ jobs:
           host: ${{secrets.AWS_HOST}}
           username: ${{secrets.AWS_USERNAME}}
           key: ${{secrets.AWS_SSH_KEY}}
-          cript: |
+          script: |
             cd ~/app
 
             git pull origin main
