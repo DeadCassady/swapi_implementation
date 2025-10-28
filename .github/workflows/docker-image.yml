@@ -30,8 +30,7 @@ jobs:
           script: |
             cd ~/app
             
-            git fetch origin
-            git reset --hard origin/master
+            git pull origin
             
             # Creating .env files on the server
             cat > ".env" << EOF
