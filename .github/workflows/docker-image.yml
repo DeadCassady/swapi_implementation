@@ -30,7 +30,7 @@ jobs:
           script: |
             cd ~/app
 
-            git pull origin master
+            git pull --rebase origin master
             
             # Creating .env files on the server
             cat > ".env" << EOF
