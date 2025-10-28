@@ -29,8 +29,9 @@ jobs:
           key: ${{secrets.SSHSWAPI}}
           script: |
             cd ~/app
-
-            git pull --rebase origin master
+            
+            git fetch origin
+            git reset --hard origin/master
             
             # Creating .env files on the server
             cat > ".env" << EOF
